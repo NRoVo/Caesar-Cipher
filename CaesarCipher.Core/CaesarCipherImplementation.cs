@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace CaesarCipher.Core
 {
@@ -7,16 +8,17 @@ namespace CaesarCipher.Core
         public static string Encrypt(string message, int key)
         {
             message = message.ToUpper();
-            var encryptedMessage = "";
+            var result = new char[message.Length];
 
-            for (int index = 0; index < message.Length; index++)
+            for (var i = 0; i < message.Length; i++)
             {
-                encryptedMessage += Encrypt(message[index], key);
+                result[i] = Encrypt(message[i], key);
             }
 
-            return encryptedMessage;
+            return new string(result);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static char Encrypt(char letter, int key)
         {
             if (letter < 'A' || letter > 'Z')
@@ -33,16 +35,17 @@ namespace CaesarCipher.Core
         public static string Decrypt(string message, int key)
         {
             message = message.ToUpper();
-            var decryptedMessage = "";
+            var result = new char[message.Length];
 
-            for (int index = 0; index < message.Length; index++)
+            for (var i = 0; i < message.Length; i++)
             {
-                decryptedMessage += Decrypt(message[index], key);
+                result[i] = Decrypt(message[i], key);
             }
 
-            return decryptedMessage;
+            return new string(result);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static char Decrypt(char letter, int key)
         {
             if (letter < 'A' || letter > 'Z')
