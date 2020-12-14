@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CaesarCipher.Core\CaesarCipher.Core.csproj">
+      <Project>{8be3f851-a641-49e3-b5a3-f5a4bea461d6}</Project>
+      <Name>CaesarCipher.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
