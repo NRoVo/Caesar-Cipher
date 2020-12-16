@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alphabet\Alphabet.cs" />
+    <Compile Include="Alphabet\EnglishAlphabet.cs" />
+    <Compile Include="Alphabet\RussianAlphabet.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
