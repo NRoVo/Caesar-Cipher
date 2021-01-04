@@ -1,17 +1,54 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
+using CaesarCipher.Core.Alphabet;
 
 namespace CaesarCipher.Core
 {
-    public static class CaesarCipherImplementation
+    public class CaesarCipherImplementation
     {
-        public static string Encrypt(string message, int key)
+        private readonly IAlphabet[] _alphabets;
+
+        public CaesarCipherImplementation(params IAlphabet [] alphabets)
         {
-            message = message.ToUpper();
+            _alphabets = alphabets;
+        }
+
+        public string Encrypt(string message, int steps)
+        {
+            var result = message.ToCharArray();
+
+            for (var i = 0; i < message.Length; i++)
+            {
+                var currentCharacter = message[i];
+                for (var j = 0; j < _alphabets.Length; j++)
+                {
+                    var currentAlphabet = _alphabets[j];
+                    if (currentAlphabet.IsApplicable(currentCharacter))
+                    {
+                        result[i] = currentAlphabet.GetWithOffset(currentCharacter, steps);
+                        break;
+                    }
+                }
+            }
+            return new string(result);
+        }
+
+        public string Decrypt(string message, int steps)
+        {
+            var result = message.ToCharArray();
+
+            for (var i = 0; i < message.Length; i++)
+            {
+                
+            }
+        }
+        /*public static string Encrypt(string message, int key)
+        {
             var result = new char[message.Length];
 
             for (var i = 0; i < message.Length; i++)
             {
+                
                 result[i] = Encrypt(message[i], key);
             }
 
@@ -65,6 +102,6 @@ namespace CaesarCipher.Core
             {
                 Console.WriteLine(Decrypt(messageToHack, index));
             }
-        }
+        }*/
     }
 }
