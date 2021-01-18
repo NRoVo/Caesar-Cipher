@@ -1,8 +1,9 @@
 ﻿namespace CaesarCipher.Core.Alphabet
 {
-    internal interface IAlphabet
+    public interface IAlphabet
     {
-        
+        int AlphabetLength { get; }
+
         bool IsApplicable(char character);
 
         char GetWithOffset(char character, int steps);

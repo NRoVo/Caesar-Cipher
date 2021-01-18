@@ -3,27 +3,27 @@ using  System;
 
 namespace CaesarCipher.Core.Alphabet
 {
-    internal class RussianAlphabet : IAlphabet
+    public class RussianAlphabet : IAlphabet
     {
-        private static readonly char[] _alphabet = new char[33]
-        {
+        public int AlphabetLength => _alphabet.Length;
+        private static readonly char[] _alphabet = {
             'А', 'Б', 'В', 'Г', 'Д', 'Е', 'Ё', 'Ж', 'З', 'И', 'Й', 'К', 'Л', 'М', 'Н', 'О', 'П', 'Р', 'С',
             'Т', 'У', 'Ф', 'Х', 'Ц', 'Ч', 'Ш', 'Щ', 'Ъ', 'Ы', 'Ь', 'Э', 'Ю', 'Я'
         };
-        
-        public bool IsApplicable(char character) 
-            => _alphabet.Contains(char.ToUpperInvariant(character));
+
+        public bool IsApplicable(char character)
+            => Array.IndexOf(_alphabet, char.ToUpperInvariant(character)) >= 0;
 
         public char GetWithOffset(char character, int steps)
         {
-            var alphabetLength = _alphabet.Length;
-            steps %= alphabetLength;
+            steps %= AlphabetLength;
             if (steps < 0)
             {
-                steps += alphabetLength;
+                steps += AlphabetLength;
             }
             
-            return _alphabet[(Array.IndexOf(_alphabet, character) + steps) % _alphabet.Length];
+            var result = _alphabet[(Array.IndexOf(_alphabet, char.ToUpperInvariant(character)) + steps) % _alphabet.Length];
+            return char.IsUpper(character) ? result : char.ToLowerInvariant(result);
         }
     }
 }

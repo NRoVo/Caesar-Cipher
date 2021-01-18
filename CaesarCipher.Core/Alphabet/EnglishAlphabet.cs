@@ -1,9 +1,10 @@
-﻿using System;
-
+﻿
 namespace CaesarCipher.Core.Alphabet
 {
-    internal class EnglishAlphabet : IAlphabet
+    public class EnglishAlphabet : IAlphabet
     {
+        public int AlphabetLength => 26;
+
         public bool IsApplicable(char character)
         {
             character = char.ToUpperInvariant(character);
@@ -12,16 +13,16 @@ namespace CaesarCipher.Core.Alphabet
 
         public char GetWithOffset(char character, int steps)
         {
-            const int alphabetLength = 26;
-            steps %= alphabetLength;
+            steps %= AlphabetLength;
             if (steps < 0)
             {
-                steps += alphabetLength;
+                steps += AlphabetLength;
             }
-            
-            var letterAsNumber = character - 'A';
-            var encryptedLetter = (letterAsNumber + steps) % alphabetLength;
-            return (char) (encryptedLetter + 'A');
+
+            var reference = char.IsUpper(character) ? 'A' : 'a';
+            var letterAsNumber = character - reference;
+            var encryptedLetter = (letterAsNumber + steps) % AlphabetLength;
+            return (char) (encryptedLetter + reference);
         }
     }
 }

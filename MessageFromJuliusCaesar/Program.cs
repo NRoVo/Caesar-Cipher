@@ -7,6 +7,7 @@ namespace MessageFromJuliusCaesar
     {
         static void Main(string[] args)
         {
+            var cipher = new CaesarCipherImplementation();
             Console.WriteLine("Welcome to Caesar Cypher Manager 1.0! Please specify an action you would like to apply" +
                               ": \"Encryption\", \"Decryption\", \"Brute Force Decryption\".");
             var userOption = Console.ReadLine();
@@ -21,7 +22,7 @@ namespace MessageFromJuliusCaesar
 
                 if (userKey >= 1 && userKey <= 26)
                 {
-                    Console.WriteLine(CaesarCipherImplementation.Encrypt(userMessage, userKey));
+                    Console.WriteLine(cipher.Encrypt(userMessage, userKey));
                 }
                 else
                 {
@@ -38,19 +39,12 @@ namespace MessageFromJuliusCaesar
 
                 if (userKey >= 1 && userKey <= 26)
                 {
-                    Console.WriteLine(CaesarCipherImplementation.Decrypt(userMessage, userKey));
+                    Console.WriteLine(cipher.Decrypt(userMessage, userKey));
                 }
                 else
                 {
                     Console.WriteLine("Invalid key! During the next program launch, please specify the correct key!");
                 }
-            }
-            else if (userOption == "Brute Force Decryption")
-            {
-                Console.WriteLine("Please enter the message on which you would like to apply Brute Force Decryption: ");
-                var userMessage = Console.ReadLine();
-
-                CaesarCipherImplementation.BruteForceDecrypt(userMessage);
             }
             else
             {
