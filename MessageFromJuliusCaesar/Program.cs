@@ -1,57 +1,60 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using CaesarCipher.Core;
+using CaesarCipher.Core.Alphabet;
+using cOOnsole.ArgumentParsing;
+using cOOnsole.Handlers.Base;
+using static System.Console;
+using static cOOnsole.Shortcuts;
 
 namespace MessageFromJuliusCaesar
 {
     internal static class Program
     {
-        static void Main(string[] args)
+        public class CaesarCipherArgument
         {
-            var cipher = new CaesarCipherImplementation();
-            Console.WriteLine("Welcome to Caesar Cypher Manager 1.0! Please specify an action you would like to apply" +
-                              ": \"Encryption\", \"Decryption\", \"Brute Force Decryption\".");
-            var userOption = Console.ReadLine();
+            [Argument("--steps", "-s", Description = "The amount of letters to shift.")]
+            public int Steps { get; set; }
 
-            if (userOption == "Encryption")
+            [Argument("--text", "-t", Description = "The text to work on.")]
+            public string Text { get; set; }
+
+            [Argument("--english", "-e", Description = "Use English alphabet")]
+            public bool UseEnglishAlphabet { get; set; }
+
+            [Argument("--russian", "-r", Description = "Use Russian alphabet")]
+            public bool UseRussianAlphabet { get; set; }
+        }
+
+        internal static Task<int> Main(string[] cliArgs) => Cli(
+            PrintUsageIfNotMatched(
+                Fork(
+                    Token("encrypt",
+                        Action(delegate(CaesarCipherArgument arg, IHandlerContext _)
+                        {
+                            WriteLine(CreateCipher(arg).Encrypt(arg.Text, arg.Steps));
+                        })),
+                    Token("decrypt",
+                        Action(delegate(CaesarCipherArgument arg, IHandlerContext _)
+                        {
+                            WriteLine(CreateCipher(arg).Decrypt(arg.Text, arg.Steps));
+                        }))
+                ))).HandleAndGetExitCode(cliArgs);
+
+        private static CaesarCipherImplementation CreateCipher(CaesarCipherArgument arg)
+        {
+            var alphabets = new List<IAlphabet>();
+            if (arg.UseRussianAlphabet)
             {
-                Console.WriteLine("Please enter the message you would like to encrypt: ");
-                var userMessage = Console.ReadLine();
-
-                Console.WriteLine("Please enter the key from 1 to 26: ");
-                var userKey = Convert.ToInt32(Console.ReadLine());
-
-                if (userKey >= 1 && userKey <= 26)
-                {
-                    Console.WriteLine(cipher.Encrypt(userMessage, userKey));
-                }
-                else
-                {
-                    Console.WriteLine("Invalid key! During the next program launch, please specify the correct key!");
-                }
-            }
-            else if (userOption == "Decryption")
-            {
-                Console.WriteLine("Please enter the message you would like to decrypt: ");
-                var userMessage = Console.ReadLine();
-
-                Console.WriteLine("Please enter the key from 1 to 26: ");
-                var userKey = Convert.ToInt32(Console.ReadLine());
-
-                if (userKey >= 1 && userKey <= 26)
-                {
-                    Console.WriteLine(cipher.Decrypt(userMessage, userKey));
-                }
-                else
-                {
-                    Console.WriteLine("Invalid key! During the next program launch, please specify the correct key!");
-                }
-            }
-            else
-            {
-                Console.WriteLine("There is no such option! Please specify correct next time!");
+                alphabets.Add(new RussianAlphabet());
             }
 
-            Console.ReadKey();
+            if (arg.UseEnglishAlphabet)
+            {
+                alphabets.Add(new EnglishAlphabet());
+            }
+
+            return new CaesarCipherImplementation(alphabets.ToArray());
         }
     }
 }
