@@ -14,5 +14,5 @@ alphabet individually. So if you had passed as parameters English and Russian, a
 * The methods responsible for encryption and decryption are covered by unit tests (```Xunit```) and performance tests (```BenchmarkDotNet```). The usage of benchmarks resulted in 
 solution to transform the user's prompt containing the message to encrypt/decrypt into the char array (by using ```string.ToCharArray```) before starting any manipulation of 
 encryption/decryption. Mentioned solution drastically improves the performance. 
-* The ```cOOnsole``` framework was integrated into this project for provide an understandable console interface for user with set of all available commands and keys. In case of prompting wrong parameters the message with usages will be displayed in console.
+* The ```cOOnsole``` framework was integrated into this project for provide an understandable console interface for user with set of all available commands and keys. In case of prompting wrong parameters the message with usages will be displayed in console. Documentation for mentioned framework could be checked here: https://github.com/kalexii/cOOnsole/blob/main/README.md
 * Another interesting feature consists in acceptability of negative keys. You can prompt a negative number as parameter to shift letters in another direction.
