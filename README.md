@@ -9,7 +9,7 @@ This program can be called only as command in terminal. Navigate to the director
 
 # Features
 * This version of a program works only with English and Russian alphabets. Both alphabets are represented in code as separate classes inherited from ```IAlphanet``` interface. Such solution was applied for make possible further program expansion by adding another alphabets classes and make sure that it will contain all necessary functionality while inherited from ```IALphabet```. 
-* Any number of alphabets (for this version only two existing) could be passed as parameters simultaneously. In such case the program will apply the encryption/decyption for every
+* Any number of alphabets (for this version only two existing) could be passed as parameters simultaneously. In such case the program will apply the encryption/decyption for each
 alphabet individually. So if you had passed as parameters English and Russian, and you have english and russian letters in your message, the encryption and decryption will work for both of them.
 * The methods responsible for encryption and decryption are covered by unit tests (```Xunit```) and performance tests (```BenchmarkDotNet```). The usage of benchmarks resulted in 
 solution to transform the user's prompt containing the message to encrypt/decrypt into the char array (by using ```string.ToCharArray```) before starting any manipulation of 
